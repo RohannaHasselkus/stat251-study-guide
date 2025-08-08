@@ -104,3 +104,14 @@ html {
   background-color: #0055aa;
 }
 
+div.title{
+	margin:1px;
+	padding:5px;
+}
+
+.title h3 {
+  display: block !important;
+  color: black !important;
+  font-size: 1.2em;
+  margin-top: 0.3em;
+}

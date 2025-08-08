@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,170 +32,1226 @@
   <!-- CONTENT WAS PREVIOUSLY MERGED: this version is already complete with MathJax and concepts -->
 
   <div class="concept" id="l10-11">
-    <h2>L10–L11: Continuous Random Variables & Transformations</h2>
-    <ul>
-      <li><strong>PDF Validity:</strong> Must be nonnegative and \( \int f(x)\,dx = 1 \).</li>
-      <li><strong>Properties of PDFs:</strong> May be >1, not always continuous, not a probability directly.</li>
-      <li><strong>CDF:</strong> Non-decreasing, between 0 and 1. Continuous for continuous r.v., stepwise for discrete.</li>
-      <li><strong>Find PDF from CDF:</strong> \( f(x) = \frac{d}{dx}F(x) \)</li>
-      <li><strong>Find Probability from CDF:</strong> \( P(a < X \leq b) = F(b) - F(a) \)</li>
-      <li><strong>Transformation:</strong> \( Y = g(X) \Rightarrow f_Y(y) = f_X(g^{-1}(y)) \left| \frac{d}{dy}g^{-1}(y) \right| \)</li>
-      <li><strong>Linear Transform:</strong> \( Y = aX + b \Rightarrow f_Y(y) = \frac{1}{|a|} f_X\left(\frac{y - b}{a}\right) \)</li>
-    </ul>
-  </div>
+  <h2>L10–L11: Continuous Random Variables & Transformations</h2>
+  <ul>
+    <li><strong>PDF Validity:</strong> 
+      <ul>
+        <li>For a continuous random variable \(X\), the probability density function (PDF) \(f(x)\) must satisfy:
+          <ol>
+            <li>\( f(x) \ge 0 \) for all \(x\) (cannot have negative density).</li>
+            <li>\( \int_{-\infty}^{\infty} f(x) \, dx = 1 \) (total probability = 1).</li>
+          </ol>
+        </li>
+        <li>Units: \(f(x)\) has units of “probability per unit of \(x\)”—probabilities are areas under \(f(x)\).</li>
+      </ul>
+    </li>
 
-  <div class="concept" id="l12">
-    <h2>L12: Expected Values, Variance & Hazard Rate</h2>
-    <ul>
-      <li><strong>Expected Value:</strong> \( E[X] = \int x f(x) \, dx \)</li>
-      <li><strong>Variance:</strong> \( \mathrm{Var}(X) = E[X^2] - (E[X])^2 \)</li>
-      <li><strong>Function Expectation:</strong> \( E[g(X)] = \int g(x) f(x) \, dx \)</li>
-      <li><strong>Linear Effects:</strong> \( E[aX + b] = aE[X] + b \), \( \mathrm{Var}(aX + b) = a^2 \mathrm{Var}(X) \)</li>
-      <li><strong>Hazard Rate:</strong> \( \lambda(x) = \frac{f(x)}{1 - F(x)} \)</li>
-      <li><strong>From Hazard to CDF:</strong> \( F(t) = 1 - \exp\left( -\int_0^t \lambda(u) \, du \right) \)</li>
-    </ul>
-  </div>
+    <li><strong>Properties of PDFs:</strong> 
+      <ul>
+        <li>\(f(x)\) can be greater than 1 — this is allowed if the interval is narrow enough (e.g., uniform on a tiny range).</li>
+        <li>PDFs need not be continuous (can have jumps or spikes), but discontinuities are rare in “nice” models.</li>
+        <li>\(f(x)\) itself is <u>not</u> a probability — only integrals over intervals give probabilities.</li>
+      </ul>
+    </li>
 
-  <div class="concept" id="l13">
-    <h2>L13: Joint & Marginal Distributions, Independence</h2>
-    <ul>
-      <li><strong>Joint PDF Validity:</strong> Nonnegative, \( \iint f(x, y) \, dx \, dy = 1 \)</li>
-      <li><strong>Marginal PDFs:</strong> \( f_X(x) = \int f(x, y) \, dy \), \( f_Y(y) = \int f(x, y) \, dx \)</li>
-      <li><strong>Independence:</strong> \( f(x, y) = f_X(x) f_Y(y) \)</li>
-      <li><strong>Poisson Thinning:</strong> \( X \sim \text{Pois}(\lambda p), Y \sim \text{Pois}(\lambda(1-p)) \), independent.</li>
-    </ul>
-  </div>
+    <li><strong>Cumulative Distribution Function (CDF):</strong>
+      <ul>
+        <li>Defined as \( F(x) = P(X \le x) = \int_{-\infty}^x f(t) \, dt \).</li>
+        <li>Properties:
+          <ol>
+            <li>Non-decreasing.</li>
+            <li>\(\lim_{x \to -\infty} F(x) = 0\), \(\lim_{x \to \infty} F(x) = 1\).</li>
+            <li>For continuous r.v., \(F(x)\) is continuous; for discrete, \(F(x)\) is stepwise.</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
 
-  <div class="concept" id="l14">
-    <h2>L14: Conditional Distributions</h2>
-    <ul>
-      <li><strong>Conditional PDF:</strong> \( f_{Y|X}(y|x) = \frac{f(x, y)}{f_X(x)} \)</li>
-    </ul>
-  </div>
+    <li><strong>Find PDF from CDF:</strong>
+      <ul>
+        <li>\( f(x) = \frac{d}{dx} F(x) \) for continuous variables.</li>
+        <li>If \(F\) is piecewise, differentiate each piece (watch for where density is zero).</li>
+      </ul>
+    </li>
 
-  <div class="concept" id="l15">
-    <h2>L15: Sums, Transformations & Order Statistics</h2>
-    <ul>
-      <li><strong>Sum:</strong> \( T = X + Y \Rightarrow f_T(t) = \int f_X(x) f_Y(t - x) \, dx \)</li>
-      <li><strong>Transformations:</strong> Use Jacobian if \( U = g(X,Y), V = h(X,Y) \)</li>
-      <li><strong>Order Stats:</strong> \( X_{(1)} = \min(X_i), X_{(n)} = \max(X_i) \)</li>
-    </ul>
-  </div>
+    <li><strong>Find Probability from CDF:</strong>
+      <ul>
+        <li>\( P(a < X \le b) = F(b) - F(a) \) for continuous r.v.</li>
+        <li>For continuous distributions: \(P(X = c) = 0\).</li>
+      </ul>
+    </li>
 
-  <div class="concept" id="l16-17">
-    <h2>L16–L17: Covariance, Correlation & Properties</h2>
-    <ul>
-      <li><strong>Covariance:</strong> \( \text{Cov}(X,Y) = E[XY] - E[X]E[Y] \)</li>
-      <li><strong>Variance of Sum:</strong> \( \text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab\text{Cov}(X,Y) \)</li>
-      <li><strong>Correlation:</strong> \( \rho = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} \)</li>
-    </ul>
-  </div>
+    <li><strong>Transformation of Variables:</strong>
+      <ul>
+        <li>If \( Y = g(X) \) is a one-to-one differentiable function:
+          \[
+            f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right|
+          \]
+        </li>
+        <li>Steps:
+          <ol>
+            <li>Find inverse \(g^{-1}(y)\) and its derivative.</li>
+            <li>Plug \(g^{-1}(y)\) into \(f_X\).</li>
+            <li>Multiply by \(\left|\frac{d}{dy}g^{-1}(y)\right|\).</li>
+            <li>Adjust domain: \(y\) can only take values from \(g\) applied to the domain of \(X\).</li>
+          </ol>
+        </li>
+        <li>If \(g\) is not one-to-one, split into monotonic pieces and sum the densities from each piece.</li>
+      </ul>
+    </li>
 
-  <div class="concept" id="l18">
-    <h2>L18: Conditional Expectation, Variance, Tower Law</h2>
-    <ul>
-      <li><strong>Conditional Expectation:</strong> \( E[Y | X] \)</li>
-      <li><strong>Tower Law:</strong> \( E[Y] = E[E[Y | X]] \)</li>
-      <li><strong>Law of Total Variance:</strong> \( \text{Var}(Y) = \text{Var}(E[Y | X]) + E[\text{Var}(Y | X)] \)</li>
-    </ul>
-  </div>
+    <li><strong>Linear Transformation Special Case:</strong>
+      <ul>
+        <li>If \( Y = aX + b\) with \(a \neq 0\):
+          \[
+            f_Y(y) = \frac{1}{|a|} \, f_X\!\left( \frac{y - b}{a} \right)
+          \]
+        </li>
+        <li>Scaling by \(a\) compresses or stretches the PDF (and inversely affects height).</li>
+        <li>Shifting by \(b\) just moves the PDF along the \(x\)-axis.</li>
+      </ul>
+    </li>
 
-  <div class="concept" id="l19">
-    <h2>L19: Moment Generating Functions</h2>
-    <ul>
-      <li><strong>MGF:</strong> \( M_X(t) = E[e^{tX}] \)</li>
-      <li><strong>Moments:</strong> \( E[X] = M'(0), E[X^2] = M''(0) \)</li>
-      <li><strong>Linear Transform:</strong> \( M_{a + bX}(t) = e^{at} M_X(bt) \)</li>
-      <li><strong>Sum of Independent:</strong> \( M_{X+Y}(t) = M_X(t) M_Y(t) \)</li>
-    </ul>
-  </div>
+    <li><strong>Key Pitfalls:</strong>
+      <ul>
+        <li>For probabilities, always integrate — don’t just read values from \(f(x)\).</li>
+        <li>Remember to include absolute values in the Jacobian (derivative term).</li>
+        <li>Watch domain restrictions after transformation — invalid \(y\) values get density 0.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
 
-  <div class="concept" id="lCLT">
-    <h2>L12 CLT, Markov, Chebyshev</h2>
-    <ul>
-      <li><strong>CLT:</strong> \( Z = \frac{\sum X_i - n\mu}{\sqrt{n\sigma^2}} \rightarrow N(0,1) \)</li>
-      <li><strong>Markov Inequality:</strong> \( P(X \geq a) \leq \frac{E[X]}{a} \)</li>
-      <li><strong>Chebyshev Inequality:</strong> \( P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2} \)</li>
-    </ul>
-  </div>
+<div class="concept" id="l12">
+  <h2>L12: Expected Values, Variance & Hazard Rate</h2>
+  <ul>
+    <li><strong>Expected Value (Mean):</strong>
+      <ul>
+        <li>Definition for continuous r.v.:
+          \[
+            E[X] = \int_{-\infty}^{\infty} x \, f(x) \, dx
+          \]
+        </li>
+        <li>Represents the "center of mass" of the distribution.</li>
+        <li>Units: same as \(X\).</li>
+        <li>Exists only if the integral converges absolutely.</li>
+      </ul>
+    </li>
+
+    <li><strong>Expectation of a Function:</strong>
+      <ul>
+        <li>
+          \[
+            E[g(X)] = \int_{-\infty}^{\infty} g(x) \, f(x) \, dx
+          \]
+        </li>
+        <li>Special cases:
+          <ul>
+            <li>\(E[X^n] \) → nth moment about the origin.</li>
+            <li>Central moments: \( E[(X - \mu)^n] \).</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Variance:</strong>
+      <ul>
+        <li>
+          \[
+            \mathrm{Var}(X) = E[(X - \mu)^2] = E[X^2] - (E[X])^2
+          \]
+        </li>
+        <li>Measures spread; always \(\ge 0\).</li>
+        <li>Units: square of the units of \(X\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Standard Deviation:</strong> 
+      \[
+        \sigma_X = \sqrt{\mathrm{Var}(X)}
+      \]
+      Same units as \(X\), easier to interpret than variance.
+    </li>
+
+    <li><strong>Linearity & Scaling Rules:</strong>
+      <ul>
+        <li>\( E[aX + b] = aE[X] + b \) (always true).</li>
+        <li>\( \mathrm{Var}(aX + b) = a^2 \mathrm{Var}(X) \) (shift by \(b\) doesn’t change variance).</li>
+      </ul>
+    </li>
+
+    <li><strong>Hazard Rate (Failure Rate):</strong>
+      <ul>
+        <li>
+          \[
+            \lambda(x) = \frac{f(x)}{1 - F(x)} = \frac{\text{density at } x}{\text{survival probability beyond } x}
+          \]
+        </li>
+        <li>Interpreted as the instantaneous failure rate given survival until \(x\).</li>
+        <li>Used in survival analysis, reliability theory, and life data modeling.</li>
+      </ul>
+    </li>
+
+    <li><strong>From Hazard to CDF:</strong>
+      <ul>
+        <li>If \(\lambda(t)\) known:
+          \[
+            F(t) = 1 - \exp\!\left( -\int_{t_0}^t \lambda(u) \, du \right)
+          \]
+          where \(t_0\) is starting time (often \(0\)).
+        </li>
+        <li>Survival function: \( S(t) = 1 - F(t) = \exp\!\left( -\int_{t_0}^t \lambda(u) \, du \right) \).</li>
+      </ul>
+    </li>
+
+    <li><strong>Special Cases:</strong>
+      <ul>
+        <li><em>Constant hazard rate</em> → exponential distribution.</li>
+        <li>Increasing hazard → aging process (e.g., wear-out of machinery).</li>
+        <li>Decreasing hazard → “infant mortality” effect.</li>
+      </ul>
+    </li>
+
+    <li><strong>Common Pitfalls:</strong>
+      <ul>
+        <li>For variance, don’t forget to subtract \((E[X])^2\).</li>
+        <li>Hazard rate not defined where \(S(t) = 0\) (past maximum lifetime).</li>
+        <li>Expectations require checking convergence — heavy-tailed distributions can have infinite mean or variance.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div class="concept" id="l13">
+  <h2>L13: Joint & Marginal Distributions, Independence</h2>
+  <ul>
+    <li><strong>Joint PDF Validity (Continuous Case):</strong>
+      <ul>
+        <li>For two continuous random variables \(X, Y\):
+          <ol>
+            <li>\( f_{X,Y}(x, y) \ge 0 \) for all \((x, y)\).</li>
+            <li>\( \iint_{-\infty}^{\infty} f_{X,Y}(x, y) \, dx \, dy = 1 \).</li>
+          </ol>
+        </li>
+        <li>Probabilities come from area integrals:
+          \[
+            P((X,Y) \in A) = \iint_A f_{X,Y}(x, y) \, dx \, dy
+          \]
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Marginal PDFs:</strong>
+      <ul>
+        <li>From the joint PDF:
+          \[
+            f_X(x) = \int_{-\infty}^{\infty} f_{X,Y}(x, y) \, dy,
+            \quad
+            f_Y(y) = \int_{-\infty}^{\infty} f_{X,Y}(x, y) \, dx
+          \]
+        </li>
+        <li>Represents the distribution of one variable regardless of the other.</li>
+      </ul>
+    </li>
+
+    <li><strong>Conditional PDFs:</strong>
+      <ul>
+        <li>
+          \[
+            f_{Y|X}(y|x) = \frac{f_{X,Y}(x, y)}{f_X(x)}, \quad \text{for } f_X(x) > 0
+          \]
+        </li>
+        <li>Interpretation: the PDF of \(Y\) given \(X = x\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Independence:</strong>
+      <ul>
+        <li>Definition: \(X\) and \(Y\) are independent if:
+          \[
+            f_{X,Y}(x, y) = f_X(x) \cdot f_Y(y) \quad \text{for all } (x, y)
+          \]
+        </li>
+        <li>Equivalent CDF condition:
+          \[
+            F_{X,Y}(x, y) = F_X(x) \cdot F_Y(y)
+          \]
+        </li>
+        <li>If independent: \(E[g(X)h(Y)] = E[g(X)] \cdot E[h(Y)]\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Expectation Rules for Two Variables:</strong>
+      <ul>
+        <li>
+          \[
+            E[X] = \iint x \, f_{X,Y}(x, y) \, dx \, dy
+          \]
+        </li>
+        <li>
+          \[
+            E[g(X, Y)] = \iint g(x, y) \, f_{X,Y}(x, y) \, dx \, dy
+          \]
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Covariance & Correlation:</strong>
+      <ul>
+        <li>
+          \[
+            \mathrm{Cov}(X, Y) = E[XY] - E[X]E[Y]
+          \]
+        </li>
+        <li>
+          \[
+            \rho_{X,Y} = \frac{\mathrm{Cov}(X,Y)}{\sigma_X \sigma_Y}
+          \]
+        </li>
+        <li>If \(X, Y\) are independent ⇒ \(\mathrm{Cov} = 0\) (but converse not always true).</li>
+      </ul>
+    </li>
+
+    <li><strong>Poisson Thinning (Special Property):</strong>
+      <ul>
+        <li>If \(N \sim \text{Pois}(\lambda)\) counts events, and each event is classified independently as:
+          <ul>
+            <li>Type 1 with probability \(p\)</li>
+            <li>Type 2 with probability \(1-p\)</li>
+          </ul>
+        </li>
+        <li>Then:
+          \[
+            X \sim \text{Pois}(\lambda p), \quad Y \sim \text{Pois}(\lambda (1-p)), \quad X \perp Y
+          \]
+        </li>
+        <li>This extends to more than two categories.</li>
+      </ul>
+    </li>
+
+    <li><strong>Common Pitfalls:</strong>
+      <ul>
+        <li>For marginals, integrate out the <em>other</em> variable, not the one you want.</li>
+        <li>Independence ≠ zero correlation (counterexamples: non-linear relationships).</li>
+        <li>Don’t confuse marginal PDFs with conditional PDFs.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div class="concept" id="l14">
+  <h2>L14: Conditional Distributions</h2>
+  <ul>
+    <li><strong>Conditional PDF (Continuous Case):</strong>
+      <ul>
+        <li>Definition:
+          \[
+            f_{Y|X}(y|x) = \frac{f_{X,Y}(x, y)}{f_X(x)}, \quad \text{for } f_X(x) > 0
+          \]
+        </li>
+        <li>Interpretation: Probability density of \(Y\) given that \(X = x\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Conditional PMF (Discrete Case):</strong>
+      \[
+        p_{Y|X}(y|x) = \frac{p_{X,Y}(x, y)}{p_X(x)}, \quad \text{for } p_X(x) > 0
+      \]
+    </li>
+
+    <li><strong>Marginalization Check:</strong>
+      \[
+        \int_{-\infty}^\infty f_{Y|X}(y|x) \, dy = 1 \quad \text{for each fixed } x
+      \]
+      This ensures it’s a valid PDF in \(y\) for any given \(x\).
+    </li>
+
+    <li><strong>Finding Conditional CDF:</strong>
+      <ul>
+        <li>
+          \[
+            F_{Y|X}(y|x) = P(Y \le y \mid X = x) = \int_{-\infty}^y f_{Y|X}(t|x) \, dt
+          \]
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Expectation Given \(X\):</strong>
+      <ul>
+        <li>
+          \[
+            E[Y \mid X = x] = \int_{-\infty}^\infty y \, f_{Y|X}(y|x) \, dy
+          \]
+        </li>
+        <li>Function form: \( m(x) = E[Y \mid X = x] \) is called the **regression function** of \(Y\) on \(X\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Law of Total Probability (Continuous):</strong>
+      <ul>
+        <li>
+          \[
+            f_Y(y) = \int_{-\infty}^\infty f_{Y|X}(y|x) \, f_X(x) \, dx
+          \]
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Law of Total Expectation:</strong>
+      \[
+        E[Y] = E_X\!\left[ E[Y \mid X] \right]
+      \]
+      i.e., integrate the conditional expectation over the distribution of \(X\).
+    </li>
+
+    <li><strong>Independence & Conditional Distributions:</strong>
+      <ul>
+        <li>If \(X\) and \(Y\) are independent:
+          \[
+            f_{Y|X}(y|x) = f_Y(y)
+          \]
+          (conditioning has no effect).
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Common Pitfalls:</strong>
+      <ul>
+        <li>Don’t confuse \(f_{Y|X}\) with \(f_{X|Y}\) — they’re generally different.</li>
+        <li>Conditional densities are not probabilities — integrate over a range to get a probability.</li>
+        <li>Always check the domain: \(f_{Y|X}(y|x)\) is 0 outside the joint support.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div class="concept" id="l15">
+  <h2>L15: Sums, Transformations & Order Statistics</h2>
+  <ul>
+    <li><strong>Sum of Two Independent Continuous Variables:</strong>
+      <ul>
+        <li>If \(T = X + Y\) and \(X, Y\) are independent:
+          \[
+            f_T(t) = \int_{-\infty}^{\infty} f_X(x) \, f_Y(t - x) \, dx
+          \]
+          This is called the <em>convolution</em> of \(f_X\) and \(f_Y\).</li>
+        <li>For discrete case:
+          \[
+            p_T(t) = \sum_x p_X(x) \, p_Y(t - x)
+          \]
+        </li>
+        <li>If not independent — need joint PDF:
+          \[
+            f_T(t) = \int f_{X,Y}(x, t - x) \, dx
+          \]
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>General Transformations of Two Variables:</strong>
+      <ul>
+        <li>If \(U = g(X,Y)\), \(V = h(X,Y)\) is a one-to-one transformation with inverse \(X = g^{-1}(U,V)\), \(Y = h^{-1}(U,V)\):
+          \[
+            f_{U,V}(u, v) = f_{X,Y}(x(u,v), y(u,v)) \cdot \left| J \right|
+          \]
+          where
+          \[
+            J = \det \begin{bmatrix}
+              \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+              \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v}
+            \end{bmatrix}
+          \]
+          is the Jacobian determinant (absolute value).</li>
+        <li>Steps:
+          <ol>
+            <li>Find inverse transformation.</li>
+            <li>Compute Jacobian determinant.</li>
+            <li>Plug into joint PDF.</li>
+            <li>Determine new variable support carefully.</li>
+          </ol>
+        </li>
+        <li>If transformation is not one-to-one, split into disjoint regions and sum densities.</li>
+      </ul>
+    </li>
+
+    <li><strong>Order Statistics (Basics):</strong>
+      <ul>
+        <li>Given i.i.d. continuous \(X_1, X_2, \dots, X_n\), order statistics are:
+          \[
+            X_{(1)} \le X_{(2)} \le \dots \le X_{(n)}
+          \]
+        </li>
+        <li><em>Minimum:</em> \(X_{(1)} = \min(X_i)\)  
+          CDF: \(F_{X_{(1)}}(x) = 1 - [1 - F(x)]^n\)  
+          PDF: \(f_{X_{(1)}}(x) = n[1 - F(x)]^{n-1} f(x)\)</li>
+        <li><em>Maximum:</em> \(X_{(n)} = \max(X_i)\)  
+          CDF: \(F_{X_{(n)}}(x) = [F(x)]^n\)  
+          PDF: \(f_{X_{(n)}}(x) = n[F(x)]^{n-1} f(x)\)</li>
+        <li>General \(k\)-th order statistic:
+          \[
+            f_{X_{(k)}}(x) = \frac{n!}{(k-1)!(n-k)!} [F(x)]^{k-1} [1 - F(x)]^{n-k} f(x)
+          \]
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Applications of Order Statistics:</strong>
+      <ul>
+        <li>Reliability (time until first/last failure).</li>
+        <li>Extreme value analysis (max/min temperatures, loads, etc.).</li>
+        <li>Sample medians and percentiles.</li>
+      </ul>
+    </li>
+
+    <li><strong>Common Pitfalls:</strong>
+      <ul>
+        <li>Always adjust the limits of integration after transformation — new support is not always obvious.</li>
+        <li>Jacobian must be taken in absolute value.</li>
+        <li>Order statistics formulas assume continuous i.i.d. variables — discrete cases are different.</li>
+        <li>For sums, independence is required for the simple convolution formula.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div class="concept" id="l16-17">
+  <h2>L16–L17: Covariance, Correlation & Properties</h2>
+  <ul>
+    <li><strong>Covariance:</strong>
+      <ul>
+        <li>Definition:
+          \[
+            \mathrm{Cov}(X,Y) = E[(X - \mu_X)(Y - \mu_Y)] = E[XY] - E[X]E[Y]
+          \]
+        </li>
+        <li>Units: product of the units of \(X\) and \(Y\).</li>
+        <li>Sign interpretation:
+          <ul>
+            <li>Positive ⇒ \(X\) and \(Y\) tend to increase together.</li>
+            <li>Negative ⇒ when \(X\) increases, \(Y\) tends to decrease.</li>
+            <li>Zero ⇒ no <em>linear</em> relationship (but can still be dependent).</li>
+          </ul>
+        </li>
+        <li>If \(X\) and \(Y\) are independent ⇒ \(\mathrm{Cov}(X,Y) = 0\) (for finite means).</li>
+      </ul>
+    </li>
+
+    <li><strong>Properties of Covariance:</strong>
+      <ul>
+        <li>Symmetry: \(\mathrm{Cov}(X,Y) = \mathrm{Cov}(Y,X)\).</li>
+        <li>Linearity in each argument:
+          \[
+            \mathrm{Cov}(aX + b, Y) = a \, \mathrm{Cov}(X,Y)
+          \]
+        </li>
+        <li>\(\mathrm{Var}(X) = \mathrm{Cov}(X,X)\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Variance of a Linear Combination:</strong>
+      <ul>
+        <li>For any \(a, b \in \mathbb{R}\):
+          \[
+            \mathrm{Var}(aX + bY) = a^2 \mathrm{Var}(X) + b^2 \mathrm{Var}(Y) + 2ab\,\mathrm{Cov}(X,Y)
+          \]
+        </li>
+        <li>If \(X, Y\) are independent:
+          \[
+            \mathrm{Var}(aX + bY) = a^2 \mathrm{Var}(X) + b^2 \mathrm{Var}(Y)
+          \]
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Correlation Coefficient:</strong>
+      <ul>
+        <li>Definition:
+          \[
+            \rho_{X,Y} = \frac{\mathrm{Cov}(X,Y)}{\sigma_X \sigma_Y}
+          \]
+        </li>
+        <li>Dimensionless; scale-invariant.</li>
+        <li>Range: \(-1 \le \rho_{X,Y} \le 1\).</li>
+        <li>\(\rho = 1\) ⇒ perfect positive linear relationship.  
+            \(\rho = -1\) ⇒ perfect negative linear relationship.</li>
+        <li>\(\rho = 0\) ⇒ no linear correlation (but possibly dependent).</li>
+      </ul>
+    </li>
+
+    <li><strong>Special Results:</strong>
+      <ul>
+        <li>Cauchy–Schwarz inequality:
+          \[
+            |\mathrm{Cov}(X,Y)| \le \sigma_X \sigma_Y
+          \]
+          equality iff \(Y = aX + b\) almost surely.
+        </li>
+        <li>Correlation is unchanged by linear transformations of the form \(X' = aX + b\) with \(a>0\) or \(a<0\) (sign flip if \(a<0\)).</li>
+      </ul>
+    </li>
+
+    <li><strong>Common Pitfalls:</strong>
+      <ul>
+        <li>Correlation ≠ causation.</li>
+        <li>Zero correlation does not imply independence (except in special cases, e.g., jointly normal variables).</li>
+        <li>Always divide by both standard deviations when computing \(\rho\).</li>
+        <li>Beware of undefined correlation if \(\sigma_X = 0\) or \(\sigma_Y = 0\).</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div class="concept" id="l18">
+  <h2>L18: Conditional Expectation, Variance, Tower Law</h2>
+  <ul>
+    <li><strong>Conditional Expectation:</strong>
+      <ul>
+        <li>Definition (continuous):
+          \[
+            E[Y \mid X = x] = \int_{-\infty}^{\infty} y \, f_{Y|X}(y \mid x) \, dy
+          \]
+        </li>
+        <li>Definition (discrete):
+          \[
+            E[Y \mid X = x] = \sum_{y} y \, p_{Y|X}(y \mid x)
+          \]
+        </li>
+        <li>Can be a function of \(x\), written \(m(x)\) = regression function of \(Y\) on \(X\).</li>
+        <li>Interpretation: the “average” of \(Y\) when \(X\) is known.</li>
+      </ul>
+    </li>
+
+    <li><strong>Properties of Conditional Expectation:</strong>
+      <ul>
+        <li>Linearity: \(E[aY + bZ \mid X] = a E[Y \mid X] + b E[Z \mid X]\).</li>
+        <li>If \(Y\) is independent of \(X\) ⇒ \(E[Y \mid X] = E[Y]\) (a constant).</li>
+        <li>If \(Y = g(X)\) ⇒ \(E[Y \mid X] = g(X)\) (deterministic given \(X\)).</li>
+        <li>Acts like an orthogonal projection in \(L^2\) space (minimizes MSE).</li>
+      </ul>
+    </li>
+
+    <li><strong>Tower Law (Law of Total Expectation):</strong>
+      <ul>
+        <li>
+          \[
+            E[Y] = E_X\!\big[ E[Y \mid X] \big]
+          \]
+        </li>
+        <li>Works for more than two variables:
+          \[
+            E[Y] = E[\,E[Y \mid X, Z]\,] = E[\,E[Y \mid X]\,]
+          \]
+        </li>
+        <li>Useful for breaking complex problems into conditional pieces.</li>
+      </ul>
+    </li>
+
+    <li><strong>Law of Total Variance:</strong>
+      <ul>
+        <li>
+          \[
+            \mathrm{Var}(Y) = \mathrm{Var}\big(E[Y \mid X]\big) + E\big[\mathrm{Var}(Y \mid X)\big]
+          \]
+        </li>
+        <li>Interpretation:
+          <ul>
+            <li>First term = variability due to differences in \(E[Y \mid X]\) across \(X\) values (explained variance).</li>
+            <li>Second term = average variability of \(Y\) around its conditional mean (unexplained variance).</li>
+          </ul>
+        </li>
+        <li>Analogy: total variation = between-group variance + within-group variance.</li>
+      </ul>
+    </li>
+
+    <li><strong>Special Cases:</strong>
+      <ul>
+        <li>If \(E[Y \mid X]\) is constant ⇒ all variance is within-group variance.</li>
+        <li>If \(\mathrm{Var}(Y \mid X) = 0\) ⇒ \(Y\) is a deterministic function of \(X\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Common Pitfalls:</strong>
+      <ul>
+        <li>Conditional expectation is a random variable (function of \(X\)), not just a number.</li>
+        <li>Don’t drop the “\(| X\)” when simplifying — it changes meaning.</li>
+        <li>For the law of total variance, order matters: variance of the conditional mean + expected conditional variance, not vice versa.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div class="concept" id="l19">
+  <h2>L19: Moment Generating Functions (MGFs)</h2>
+  <ul>
+    <li><strong>Definition:</strong>
+      <ul>
+        <li>
+          \[
+            M_X(t) = E\big[e^{tX}\big]
+          \]
+          when the expectation exists for \(t\) in an open interval around 0.
+        </li>
+        <li>MGF “generates” all moments of \(X\) by differentiation at \(t = 0\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Moments from the MGF:</strong>
+      <ul>
+        <li>First moment (mean):
+          \[
+            E[X] = M_X'(0)
+          \]
+        </li>
+        <li>Second moment:
+          \[
+            E[X^2] = M_X''(0)
+          \]
+        </li>
+        <li>Variance:
+          \[
+            \mathrm{Var}(X) = M_X''(0) - \big(M_X'(0)\big)^2
+          \]
+        </li>
+        <li>In general, \(n\)-th moment:
+          \[
+            E[X^n] = M_X^{(n)}(0)
+          \]
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Linear Transform Property:</strong>
+      <ul>
+        <li>If \(Y = a + bX\), then:
+          \[
+            M_Y(t) = e^{at} \, M_X(bt)
+          \]
+        </li>
+        <li>Shift by \(a\) ⇒ multiplies MGF by \(e^{at}\).</li>
+        <li>Scale by \(b\) ⇒ replaces \(t\) with \(bt\).</li>
+      </ul>
+    </li>
+
+    <li><strong>Sum of Independent Variables:</strong>
+      <ul>
+        <li>If \(X\) and \(Y\) are independent:
+          \[
+            M_{X+Y}(t) = M_X(t) \cdot M_Y(t)
+          \]
+        </li>
+        <li>Extends to \(n\) independent variables:
+          \[
+            M_{\sum_{i=1}^n X_i}(t) = \prod_{i=1}^n M_{X_i}(t)
+          \]
+        </li>
+        <li>Useful for identifying the distribution of sums (e.g., sum of i.i.d. normals is normal).</li>
+      </ul>
+    </li>
+
+    <li><strong>Uniqueness Property:</strong>
+      <ul>
+        <li>If two random variables have the same MGF in a neighborhood of \(t = 0\), they have the same distribution.</li>
+        <li>This makes MGFs powerful for proving distributional identities.</li>
+      </ul>
+    </li>
+
+    <li><strong>Existence Caveat:</strong>
+      <ul>
+        <li>Some distributions (e.g., Cauchy) have no MGF because \(E[e^{tX}]\) is infinite for all \(t \ne 0\).</li>
+        <li>For those, use the characteristic function \( \varphi_X(t) = E[e^{itX}] \) instead.</li>
+      </ul>
+    </li>
+
+    <li><strong>Common Pitfalls:</strong>
+      <ul>
+        <li>For sums, independence is required; without it, \(M_{X+Y}(t) \neq M_X(t) M_Y(t)\).</li>
+        <li>MGFs are not guaranteed to exist for all \(t\), only near 0.</li>
+        <li>For transformations, remember the order: scale first inside \(t\), shift outside with \(e^{at}\).</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div class="concept" id="lCLT">
+  <h2>L12: CLT, Markov, and Chebyshev Inequalities</h2>
+  <ul>
+    <li><strong>Central Limit Theorem (CLT):</strong>
+      <ul>
+        <li>For i.i.d. random variables \(X_1, X_2, \dots, X_n\) with mean \(\mu\) and variance \(\sigma^2\):
+          \[
+            Z = \frac{\sum_{i=1}^n X_i - n\mu}{\sqrt{n\sigma^2}} \xrightarrow{d} N(0, 1) \quad \text{as } n \to \infty
+          \]
+        </li>
+        <li>This means that the distribution of the standardized sample sum (or sample mean) approaches the standard normal distribution as \(n\) grows.</li>
+        <li><em>Interpretation:</em> Even if the \(X_i\) are not normally distributed, the sum/mean will be approximately normal for large \(n\).</li>
+        <li><em>Practical use:</em> Justifies using normal approximations for sums and means when \(n\) is large.</li>
+        <li><em>Conditions:</em> Typically requires finite mean and variance; some variants work under weaker conditions.</li>
+      </ul>
+    </li>
+
+    <li><strong>Markov Inequality:</strong>
+      <ul>
+        <li>For a nonnegative random variable \(X\) and \(a > 0\):
+          \[
+            P(X \geq a) \leq \frac{E[X]}{a}
+          \]
+        </li>
+        <li><em>Interpretation:</em> Gives a very general bound on tail probability using only the mean.</li>
+        <li><em>Use case:</em> Works even without knowing variance or distribution shape, but the bound can be loose.</li>
+        <li><em>Condition:</em> \(X \ge 0\) almost surely.</li>
+      </ul>
+    </li>
+
+    <li><strong>Chebyshev Inequality:</strong>
+      <ul>
+        <li>For any random variable \(X\) with mean \(\mu\) and standard deviation \(\sigma\):
+          \[
+            P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}, \quad k > 0
+          \]
+        </li>
+        <li><em>Interpretation:</em> At least \(1 - \frac{1}{k^2}\) of the probability mass lies within \(k\) standard deviations of the mean.</li>
+        <li><em>Special case:</em> For \(k = 2\), at least 75% of values lie within \(2\sigma\) of \(\mu\).</li>
+        <li><em>Condition:</em> Only requires finite variance; distribution can be any shape.</li>
+        <li><em>Note:</em> Chebyshev is often tighter than Markov when variance is known.</li>
+      </ul>
+    </li>
+
+    <li><strong>Common Pitfalls:</strong>
+      <ul>
+        <li>CLT gives an <em>approximation</em> for large \(n\); for small \(n\), the approximation can be poor unless data is already nearly normal.</li>
+        <li>Markov requires \(X \geq 0\); applying it to variables that can be negative invalidates it.</li>
+        <li>Chebyshev applies to all distributions with finite variance, but is often much looser than exact probabilities.</li>
+        <li>Neither Markov nor Chebyshev requires normality; that’s what makes them robust but conservative.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
 
   <div> <!-- ADDITIONAL TOPICS -->
 
 <div class="concept" id="discrete-rv">
   <h2>Discrete Random Variables</h2>
   <ul>
-    <li><strong>PMF:</strong> \( p(x) = P(X = x) \), with \( p(x) \geq 0 \) and \( \sum_x p(x) = 1 \).</li>
-    <li><strong>CDF:</strong> \( F(x) = P(X \leq x) = \sum_{t \leq x} p(t) \).</li>
-    <li><strong>Expectation:</strong> \( E[X] = \sum_x x \, p(x) \).</li>
-    <li><strong>Variance:</strong> \( \mathrm{Var}(X) = \sum_x (x - \mu)^2 p(x) \).</li>
-    <li><strong>Examples:</strong>
+    <li><strong>Probability Mass Function (PMF):</strong>
       <ul>
-        <li><em>Bernoulli:</em> \( p(x) = p^x (1-p)^{1-x} \), \( \mu = p \), \( \sigma^2 = p(1-p) \).</li>
-        <li><em>Binomial:</em> \( p(x) = \binom{n}{x} p^x (1-p)^{n-x} \).</li>
-        <li><em>Geometric:</em> \( p(x) = (1-p)^{x-1} p \), memoryless property.</li>
-        <li><em>Poisson:</em> \( p(x) = e^{-\lambda} \frac{\lambda^x}{x!} \), \( \mu = \sigma^2 = \lambda \).</li>
+        <li>Definition: \( p(x) = P(X = x) \) for each possible value \(x\).</li>
+        <li>Requirements:
+          <ul>
+            <li>Nonnegativity: \( p(x) \geq 0 \) for all \(x\).</li>
+            <li>Normalization: \( \sum_x p(x) = 1 \).</li>
+          </ul>
+        </li>
+        <li><em>Interpretation:</em> The PMF gives the exact probability of each outcome for a discrete random variable.</li>
+      </ul>
+    </li>
+
+    <li><strong>Cumulative Distribution Function (CDF):</strong>
+      <ul>
+        <li>Definition: \( F(x) = P(X \leq x) = \sum_{t \leq x} p(t) \).</li>
+        <li><em>Properties:</em>
+          <ul>
+            <li>Nondecreasing function of \(x\).</li>
+            <li>Limits: \( F(-\infty) = 0 \), \( F(\infty) = 1 \).</li>
+            <li>Right-continuous (constant between jumps for discrete variables).</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Expectation (Mean):</strong>
+      <ul>
+        <li>Formula: \( E[X] = \sum_x x \, p(x) \).</li>
+        <li><em>Interpretation:</em> Long-run average value of \(X\) over many trials.</li>
+      </ul>
+    </li>
+
+    <li><strong>Variance:</strong>
+      <ul>
+        <li>Formula: \( \mathrm{Var}(X) = \sum_x (x - \mu)^2 p(x) \), where \(\mu = E[X]\).</li>
+        <li>Alternate formula: \( \mathrm{Var}(X) = E[X^2] - (E[X])^2 \).</li>
+        <li><em>Interpretation:</em> Measures spread around the mean.</li>
+      </ul>
+    </li>
+
+    <li><strong>Common Examples:</strong>
+      <ul>
+        <li><em>Bernoulli:</em>
+          <ul>
+            <li>PMF: \( p(x) = p^x (1-p)^{1-x} \), \(x \in \{0,1\}\).</li>
+            <li>Mean: \( \mu = p \), Variance: \( \sigma^2 = p(1-p) \).</li>
+            <li>Models a single success/failure trial.</li>
+          </ul>
+        </li>
+        <li><em>Binomial:</em>
+          <ul>
+            <li>PMF: \( p(x) = \binom{n}{x} p^x (1-p)^{n-x} \), \(x = 0,1,\dots,n\).</li>
+            <li>Mean: \( \mu = np \), Variance: \( \sigma^2 = np(1-p) \).</li>
+            <li>Models number of successes in \(n\) independent Bernoulli trials.</li>
+          </ul>
+        </li>
+        <li><em>Geometric:</em>
+          <ul>
+            <li>PMF: \( p(x) = (1-p)^{x-1} p \), \(x = 1, 2, \dots\).</li>
+            <li>Mean: \( 1/p \), Variance: \( (1-p)/p^2 \).</li>
+            <li><strong>Memoryless property:</strong> \( P(X > m + n \mid X > m) = P(X > n) \).</li>
+            <li>Models number of trials until first success.</li>
+          </ul>
+        </li>
+        <li><em>Poisson:</em>
+          <ul>
+            <li>PMF: \( p(x) = e^{-\lambda} \frac{\lambda^x}{x!} \), \(x = 0, 1, 2, \dots\).</li>
+            <li>Mean and variance: \( \mu = \sigma^2 = \lambda \).</li>
+            <li>Models number of events in fixed time/space intervals with rate \(\lambda\) (rare events model).</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Notes & Pitfalls:</strong>
+      <ul>
+        <li>For discrete variables, probabilities come from PMF; CDF is cumulative sum of PMF values.</li>
+        <li>In variance calculations, forgetting to square \((x - \mu)\) is a common mistake.</li>
+        <li>Poisson distribution often approximates Binomial when \(n\) is large and \(p\) is small (\( \lambda = np \)).</li>
       </ul>
     </li>
   </ul>
 </div>
 
+
 <div class="concept" id="named-cont">
   <h2>Named Continuous Distributions</h2>
   <ul>
-    <li><em>Uniform(a,b):</em> \( f(x) = \frac{1}{b-a} \), \( \mu = \frac{a+b}{2} \), \( \sigma^2 = \frac{(b-a)^2}{12} \).</li>
-    <li><em>Exponential(λ):</em> \( f(x) = \lambda e^{-\lambda x} \), \( \mu = 1/\lambda \), memoryless.</li>
-    <li><em>Normal(μ,σ²):</em> \( f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu)^2 / (2\sigma^2)} \).</li>
-    <li><em>Gamma(α,β):</em> \( f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta} \).</li>
+    <li><em>Uniform(a, b):</em>
+      <ul>
+        <li>PDF: \( f(x) = \frac{1}{b-a} \), for \( a \leq x \leq b \).</li>
+        <li>Mean: \( \mu = \frac{a+b}{2} \).</li>
+        <li>Variance: \( \sigma^2 = \frac{(b-a)^2}{12} \).</li>
+        <li><em>Interpretation:</em> Models equal likelihood for all values in \([a, b]\).</li>
+        <li>Example: Picking a random point on a line segment.</li>
+      </ul>
+    </li>
+
+    <li><em>Exponential(λ):</em>
+      <ul>
+        <li>PDF: \( f(x) = \lambda e^{-\lambda x} \), for \( x \geq 0 \).</li>
+        <li>Mean: \( 1/\lambda \), Variance: \( 1/\lambda^2 \).</li>
+        <li><strong>Memoryless property:</strong> \( P(X > s+t \mid X > s) = P(X > t) \).</li>
+        <li><em>Interpretation:</em> Models waiting time between independent events in a Poisson process.</li>
+        <li>Example: Time until the next bus arrives (assuming constant rate).</li>
+      </ul>
+    </li>
+
+    <li><em>Normal(μ, σ²):</em>
+      <ul>
+        <li>PDF: \( f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu)^2 / (2\sigma^2)} \).</li>
+        <li>Mean: \( \mu \), Variance: \( \sigma^2 \).</li>
+        <li>Symmetric, bell-shaped curve; ~68-95-99.7 rule for ±1, ±2, ±3 standard deviations.</li>
+        <li><em>Interpretation:</em> Many natural measurements and errors follow this distribution due to the Central Limit Theorem.</li>
+        <li>Standard normal: \( N(0, 1) \), with Z-scores \( z = (x - \mu)/\sigma \).</li>
+      </ul>
+    </li>
+
+    <li><em>Gamma(α, β):</em>
+      <ul>
+        <li>PDF: \( f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta} \), for \( x > 0 \).</li>
+        <li>Parameters:
+          <ul>
+            <li>\( \alpha \) (shape) — controls skewness.</li>
+            <li>\( \beta \) (scale) — stretches/compresses horizontally.</li>
+          </ul>
+        </li>
+        <li>Mean: \( \mu = \alpha\beta \), Variance: \( \sigma^2 = \alpha\beta^2 \).</li>
+        <li>Special cases:
+          <ul>
+            <li>\( \alpha = 1 \) → Exponential(\( 1/\beta \)).</li>
+            <li>Sum of \( \alpha \) independent Exponential(\( 1/\beta \)) variables is Gamma(\( \alpha, \beta \)).</li>
+          </ul>
+        </li>
+        <li>Example: Models total waiting time for \( \alpha \) events in a Poisson process.</li>
+      </ul>
+    </li>
+
+    <li><strong>Notes & Pitfalls:</strong>
+      <ul>
+        <li>Continuous distributions use PDFs; probabilities are areas under the curve, not point values.</li>
+        <li>For Exponential and Gamma, always check parameterization — some sources use rate \(\lambda = 1/\beta\) instead of scale \(\beta\).</li>
+        <li>Normal CDF (\( \Phi(z) \)) has no closed form — use tables or software.</li>
+      </ul>
+    </li>
   </ul>
 </div>
+
 
 <div class="concept" id="bayes">
   <h2>Conditional Probability & Bayes Theorem</h2>
   <ul>
-    <li><strong>Conditional Probability:</strong> \( P(A|B) = \frac{P(A \cap B)}{P(B)} \).</li>
-    <li><strong>Bayes' Theorem:</strong> \( P(A|B) = \frac{P(B|A)P(A)}{P(B)} \).</li>
-    <li><strong>Total Probability:</strong> \( P(B) = \sum_i P(B|A_i)P(A_i) \).</li>
+    <li><strong>Conditional Probability:</strong>
+      <ul>
+        <li>Definition: \( P(A|B) = \frac{P(A \cap B)}{P(B)} \), provided \( P(B) > 0 \).</li>
+        <li><em>Interpretation:</em> Probability of \(A\) given that \(B\) has occurred — restrict the sample space to \(B\).</li>
+        <li>Example: Drawing an ace given the card is a spade: \( P(\text{Ace}|\text{Spade}) = \frac{1/52}{13/52} = 1/13 \).</li>
+      </ul>
+    </li>
+
+    <li><strong>Bayes' Theorem:</strong>
+      <ul>
+        <li>Formula: \( P(A|B) = \frac{P(B|A)P(A)}{P(B)} \).</li>
+        <li>General form (partition \(\{A_i\}\)): \( P(A_k|B) = \frac{P(B|A_k)P(A_k)}{\sum_i P(B|A_i)P(A_i)} \).</li>
+        <li><em>Interpretation:</em> Updates prior probability \(P(A)\) to posterior \(P(A|B)\) after observing \(B\).</li>
+        <li>Common use: Medical testing (false positives/negatives), spam filtering, Bayesian statistics.</li>
+      </ul>
+    </li>
+
+    <li><strong>Total Probability Law:</strong>
+      <ul>
+        <li>Formula: \( P(B) = \sum_i P(B|A_i)P(A_i) \), where \( \{A_i\} \) is a partition of the sample space.</li>
+        <li>Use: Computes \(P(B)\) when easier to work within conditional cases.</li>
+        <li>Example: Overall probability of a positive medical test considering sick and healthy populations.</li>
+      </ul>
+    </li>
+
+    <li><strong>Notes & Pitfalls:</strong>
+      <ul>
+        <li>For Bayes, the denominator \(P(B)\) ensures posterior probabilities sum to 1 across all \(A_i\).</li>
+        <li>Be careful with \(P(B|A)\) vs \(P(A|B)\) — they are usually not equal.</li>
+        <li>Always check \(P(B) > 0\) before applying conditional probability formulas.</li>
+      </ul>
+    </li>
   </ul>
 </div>
+
 
 <div class="concept" id="sampling">
   <h2>Sampling Distributions</h2>
   <ul>
-    <li><strong>Sample Mean:</strong> \( \bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right) \) if \( X_i \) normal.</li>
-    <li><strong>Central Limit Theorem:</strong> For large \( n \), \( \bar{X} \) approx. normal.</li>
-    <li><em>t-distribution:</em> Used when σ unknown and data normal.</li>
-    <li><em>Chi-square:</em> Sum of squares of standard normals.</li>
-    <li><em>F-distribution:</em> Ratio of scaled chi-squares.</li>
+    <li><strong>Sample Mean:</strong>
+      <ul>
+        <li>If \( X_1, X_2, \dots, X_n \) are i.i.d. \( N(\mu, \sigma^2) \), then:
+          \[
+          \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i \sim N\left( \mu, \frac{\sigma^2}{n} \right)
+          \]
+        </li>
+        <li>Variance decreases with \(n\) — more data → more precise estimates.</li>
+      </ul>
+    </li>
+
+    <li><strong>Central Limit Theorem (CLT):</strong>
+      <ul>
+        <li>For large \(n\), regardless of original distribution (if finite variance),
+          \[
+          \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \approx N(0,1)
+          \]
+        </li>
+        <li>Why it matters: Allows normal-based inference for many non-normal populations.</li>
+      </ul>
+    </li>
+
+    <li><em>t-distribution:</em>
+      <ul>
+        <li>Used when \( \sigma \) is unknown and population is normal (or \(n\) large).</li>
+        <li>Statistic:
+          \[
+          t = \frac{\bar{X} - \mu}{S / \sqrt{n}} \sim t_{n-1}
+          \]
+        </li>
+        <li>Heavier tails than normal → accounts for extra uncertainty from estimating \( \sigma \).</li>
+      </ul>
+    </li>
+
+    <li><em>Chi-square distribution:</em>
+      <ul>
+        <li>If \( Z_1, \dots, Z_k \) are i.i.d. \( N(0,1) \), then:
+          \[
+          Q = \sum_{i=1}^k Z_i^2 \sim \chi^2_k
+          \]
+        </li>
+        <li>Common uses: Variance estimation, goodness-of-fit tests.</li>
+      </ul>
+    </li>
+
+    <li><em>F-distribution:</em>
+      <ul>
+        <li>If \( U \sim \chi^2_{d_1} \) and \( V \sim \chi^2_{d_2} \) independent, then:
+          \[
+          F = \frac{U/d_1}{V/d_2} \sim F_{d_1, d_2}
+          \]
+        </li>
+        <li>Common uses: Comparing two variances, ANOVA.</li>
+      </ul>
+    </li>
+
+    <li><strong>Notes & Pitfalls:</strong>
+      <ul>
+        <li>t-distribution → normal as \(n \to \infty\).</li>
+        <li>Chi-square and F are always non-negative and skewed right.</li>
+        <li>CLT requires independent, identically distributed variables with finite variance.</li>
+      </ul>
+    </li>
   </ul>
 </div>
+
 
 <div class="concept" id="estimation">
   <h2>Point Estimation</h2>
   <ul>
-    <li><strong>Bias:</strong> \( \mathrm{Bias}(\hat{\theta}) = E[\hat{\theta}] - \theta \).</li>
-    <li><strong>Consistency:</strong> \( \hat{\theta} \to_p \theta \) as \( n \to \infty \).</li>
-    <li><strong>Efficiency:</strong> Lower variance among unbiased estimators is better.</li>
-    <li><strong>MLE:</strong> Maximize \( L(\theta) = \prod f(x_i | \theta) \).</li>
+    <li><strong>Bias:</strong>
+      <ul>
+        <li>Measures how far an estimator’s expected value is from the true parameter:
+          \[
+          \mathrm{Bias}(\hat{\theta}) = E[\hat{\theta}] - \theta
+          \]
+        </li>
+        <li><em>Unbiased estimator:</em> \( E[\hat{\theta}] = \theta \).</li>
+        <li>Example: The sample mean \( \bar{X} \) is unbiased for \( \mu \); the sample variance with \(1/n\) instead of \(1/(n-1)\) is biased low.</li>
+      </ul>
+    </li>
+
+    <li><strong>Consistency:</strong>
+      <ul>
+        <li>An estimator is consistent if it converges in probability to the true value as sample size grows:
+          \[
+          \hat{\theta} \xrightarrow{p} \theta
+          \]
+        </li>
+        <li>Intuition: With enough data, it “locks in” on the truth.</li>
+        <li>Example: \( \bar{X} \) is consistent for \( \mu \) by the Law of Large Numbers.</li>
+      </ul>
+    </li>
+
+    <li><strong>Efficiency:</strong>
+      <ul>
+        <li>Among unbiased estimators, the one with smallest variance is called <em>most efficient</em>.</li>
+        <li>Efficiency is sometimes compared to the <em>Cramér–Rao lower bound</em> (theoretical minimum variance).</li>
+        <li>Example: In normal samples, \( \bar{X} \) is the most efficient unbiased estimator of \( \mu \).</li>
+      </ul>
+    </li>
+
+    <li><strong>Maximum Likelihood Estimation (MLE):</strong>
+      <ul>
+        <li>Given data \( x_1, \dots, x_n \) and PDF/PMF \( f(x|\theta) \), the likelihood is:
+          \[
+          L(\theta) = \prod_{i=1}^n f(x_i | \theta)
+          \]
+        </li>
+        <li>Find \( \hat{\theta}_{\text{MLE}} \) by maximizing \( L(\theta) \) or equivalently the log-likelihood:
+          \[
+          \ell(\theta) = \sum_{i=1}^n \log f(x_i | \theta)
+          \]
+        </li>
+        <li>Often easier to differentiate \( \ell(\theta) \) and solve \( \ell'(\theta) = 0 \).</li>
+        <li>MLEs are typically consistent, asymptotically normal, and asymptotically efficient (large-sample nice properties).</li>
+      </ul>
+    </li>
+
+    <li><strong>Extra Notes:</strong>
+      <ul>
+        <li>Bias, variance, and efficiency often trade off — sometimes a small bias reduces variance enough to improve overall performance (bias–variance tradeoff).</li>
+        <li>MLE can be biased for small \(n\) but usually bias vanishes as \(n\) grows.</li>
+      </ul>
+    </li>
   </ul>
 </div>
+
 
 <div class="concept" id="ci">
   <h2>Confidence Intervals</h2>
   <ul>
-    <li><em>Mean, σ known:</em> \( \bar{X} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \).</li>
-    <li><em>Mean, σ unknown:</em> \( \bar{X} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}} \).</li>
-    <li><em>Proportion:</em> \( \hat{p} \pm z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \).</li>
+    <li><strong>Interpretation:</strong>
+      A \( (1-\alpha)100\% \) CI is a range of plausible values for the parameter.
+      Over many random samples, this method will capture the true parameter in approximately \( (1-\alpha)100\% \) of intervals.
+      <em>Important:</em> It’s about the procedure’s reliability, not the probability for a specific computed interval.
+    </li>
+
+    <li><em>Mean, σ known (Normal or CLT):</em>
+      \[
+      \bar{X} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+      \]
+      - Use \( z \) from standard normal table.
+      - Assumes either \( X_i \) are normal or \( n \) large (CLT).
+    </li>
+
+    <li><em>Mean, σ unknown:</em>
+      \[
+      \bar{X} \pm t_{\alpha/2,\,n-1} \frac{s}{\sqrt{n}}
+      \]
+      - Use Student’s \( t \) distribution with \( n-1 \) df.
+      - Assumes \( X_i \) are normal or \( n \) reasonably large.
+    </li>
+
+    <li><em>Proportion (large sample):</em>
+      \[
+      \hat{p} \pm z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+      \]
+      - Works when \( n\hat{p} \geq 10 \) and \( n(1-\hat{p}) \geq 10 \) (normal approximation).
+    </li>
+
+    <li><strong>General form:</strong>
+      \[
+      \text{Point Estimate} \; \pm \; (\text{Critical Value}) \times (\text{Standard Error})
+      \]
+      Critical value is \( z \) or \( t \) depending on whether σ is known.
+    </li>
+
+    <li><strong>Effect of \( n \) and Confidence Level:</strong>
+      <ul>
+        <li>Larger \( n \) → smaller standard error → narrower CI.</li>
+        <li>Higher confidence (e.g., 99% vs. 95%) → larger critical value → wider CI.</li>
+      </ul>
+    </li>
   </ul>
 </div>
+
 
 <div class="concept" id="hypothesis">
   <h2>Hypothesis Testing</h2>
   <ul>
-    <li><strong>Steps:</strong> State \( H_0 \) and \( H_a \), choose α, compute statistic, find p-value, decide.</li>
-    <li><strong>Type I Error:</strong> Rejecting \( H_0 \) when true.</li>
-    <li><strong>Type II Error:</strong> Failing to reject \( H_0 \) when false.</li>
-    <li><st>
+    <li><strong>Steps:</strong>
+      <ol>
+        <li>State \( H_0 \) (null hypothesis) and \( H_a \) (alternative hypothesis).</li>
+        <li>Choose significance level \( \alpha \) (commonly 0.05).</li>
+        <li>Compute test statistic (e.g., \( z \), \( t \), \( \chi^2 \), \( F \)).</li>
+        <li>Find p-value or compare test statistic to critical value.</li>
+        <li>Decision: Reject \( H_0 \) if p-value ≤ α (or statistic in rejection region).</li>
+      </ol>
+    </li>
 
+    <li><strong>Type I Error:</strong> Rejecting \( H_0 \) when it is true.
+      <br>Probability = \( \alpha \) (significance level).
+    </li>
+
+    <li><strong>Type II Error:</strong> Failing to reject \( H_0 \) when \( H_a \) is true.
+      <br>Probability = \( \beta \). Power of test = \( 1 - \beta \).
+    </li>
+
+    <li><strong>p-value:</strong>
+      Probability, assuming \( H_0 \) is true, of observing a result at least as extreme as the sample result.
+      Smaller p-value → stronger evidence against \( H_0 \).
+    </li>
+
+    <li><strong>One-tailed vs. Two-tailed:</strong>
+      <ul>
+        <li>One-tailed: \( H_a \) specifies a direction (e.g., \( \mu > \mu_0 \)).</li>
+        <li>Two-tailed: \( H_a \) tests for difference (e.g., \( \mu \neq \mu_0 \)).</li>
+      </ul>
+    </li>
+
+    <li><strong>Common test statistics:</strong>
+      <ul>
+        <li>\( z \)-test: σ known, normal data or large \( n \).</li>
+        <li>\( t \)-test: σ unknown, normal data.</li>
+        <li>\( \chi^2 \)-test: variances or categorical data.</li>
+        <li>\( F \)-test: comparing two variances or in ANOVA.</li>
+      </ul>
+    </li>
+  </ul>
 </div>
 
   <p><em>"Statistics is the grammar of science." </em></p>
