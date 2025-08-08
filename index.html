@@ -24,6 +24,25 @@
     <li><a href="#l18">Conditional Exp</a></li>
     <li><a href="#l19">MGFs</a></li>
     <li><a href="#lCLT">CLT & Bounds</a></li>
+    <li><a href="#probability">Probability Basics</a></li>
+    <li><a href="#bayes">Conditional Probability & Bayes Theorem</a></li>
+    <li><a href="#random-vars">Random Variables</a></li>
+    <li><a href="#expectation">Expectation & Variance</a></li>
+    <li><a href="#distributions">Common Distributions</a></li>
+    <li><a href="#ci">Confidence Intervals</a></li>
+    <li><a href="#hypothesis">Hypothesis Testing</a></li>
+    <li>
+      <button id="interactive-toggle" style="background: none; border: none; padding: 0; font-size: 1em; cursor: pointer; color: #fff;">
+        ▶ Interactive Visualizations
+      </button>
+      <ul id="interactive-list" style="margin-left: 15px; list-style: circle; display: none;">
+        <li><a href="#pdf-cdf">PDF & CDF of Normal Distribution</a></li>
+        <li><a href="#dice-bar">PMF of a Fair Die</a></li>
+        <li><a href="#clt">Central Limit Theorem Simulation</a></li>
+        <li><a href="#variance-demo">Variance Exploration</a></li>
+        <li><a href="#binomial-demo">Binomial Distribution Simulator</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -1465,5 +1484,16 @@
 
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+  const toggleBtn = document.getElementById('interactive-toggle');
+  const list = document.getElementById('interactive-list');
+
+  toggleBtn.addEventListener('click', () => {
+    const isVisible = list.style.display === 'block';
+    list.style.display = isVisible ? 'none' : 'block';
+    toggleBtn.textContent = (isVisible ? '▶' : '▼') + ' Interactive Visualizations';
+  });
+</script>
 </body>
 </html>
