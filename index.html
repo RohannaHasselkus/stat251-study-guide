@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,6 +42,18 @@
         <li><a href="#clt">Central Limit Theorem Simulation</a></li>
         <li><a href="#variance-demo">Variance Exploration</a></li>
         <li><a href="#binomial-demo">Binomial Distribution Simulator</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <button id="pset-toggle" style="background: none; border: none; padding: 0; font-size: 1em; cursor: pointer; color: #fff;">
+        ▶ Example PSET
+      </button>
+      <ul id="examplepset" style="margin-left: 15px; list-style: circle; display: none;">
+        <li><a href="#question1">Question 1</a></li>
+        <li><a href="#question2">Question 2 </a></li>
+        <li><a href="#question3">Question 3</a></li>
+        <li><a href="#question4">Question 4</a></li>
       </ul>
     </li>
   </ul>
@@ -1485,15 +1498,155 @@
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-<script>
-  const toggleBtn = document.getElementById('interactive-toggle');
-  const list = document.getElementById('interactive-list');
+<!-- First toggle -->
+<button id="interactive-toggle">▶ Interactive Visualizations</button>
+<ul id="interactive-list" style="display: none;">
+  ...
+</ul>
 
-  toggleBtn.addEventListener('click', () => {
-    const isVisible = list.style.display === 'block';
-    list.style.display = isVisible ? 'none' : 'block';
-    toggleBtn.textContent = (isVisible ? '▶' : '▼') + ' Interactive Visualizations';
+<!-- Second toggle -->
+<button id="pset-toggle">▶ Example PSET</button>
+<ul id="examplepset" style="display: none;">
+  ...
+</ul>
+
+<script>
+  // Interactive Visualizations toggle
+  const interactiveToggleBtn = document.getElementById('interactive-toggle');
+  const interactiveList = document.getElementById('interactive-list');
+
+  interactiveToggleBtn.addEventListener('click', () => {
+    const isVisible = interactiveList.style.display === 'block';
+    interactiveList.style.display = isVisible ? 'none' : 'block';
+    interactiveToggleBtn.textContent = (isVisible ? '▶' : '▼') + ' Interactive Visualizations';
+  });
+
+  // Example PSET toggle
+  const psetToggleBtn = document.getElementById('pset-toggle');
+  const exampleList = document.getElementById('examplepset');
+
+  psetToggleBtn.addEventListener('click', () => {
+    const isVisible = exampleList.style.display === 'block';
+    exampleList.style.display = isVisible ? 'none' : 'block';
+    psetToggleBtn.textContent = (isVisible ? '▶' : '▼') + ' Example PSET';
   });
 </script>
+
+
+<div id="examplepset">
+<h1>Sample Questions and Solutions</h1>
+<p class="small">These are from PSET 13 which was not collected.</p>
+
+<!-- Question 1 -->
+<div class="question" id="question1">
+  <h2>Question 1</h2>
+  <p><strong>Given:</strong> \(M_X(t)=\dfrac{1}{(1-t)^2},\ t<1.\)</p>
+
+  <details open>
+    <summary>Step-by-step solution</summary>
+    <div class="solution">
+      <p><strong>1) Find moments using derivatives of the MGF.</strong></p>
+      <p>\(M_X'(t)=\dfrac{d}{dt}(1-t)^{-2}=2(1-t)^{-3}\). Evaluate at \(t=0\):</p>
+      <p>\(\displaystyle E[X]=M_X'(0)=2.\)</p>
+
+      <p>\(M_X''(t)=\dfrac{d}{dt}2(1-t)^{-3}=6(1-t)^{-4}\). Evaluate at \(t=0\):</p>
+      <p>\(\displaystyle E[X^2]=M_X''(0)=6.\)</p>
+
+      <p>Hence \(\displaystyle \mathrm{Var}(X)=E[X^2]-[E[X]]^2=6-2^2=2.\)</p>
+
+      <hr/>
+
+      <p><strong>2) Identify the distribution.</strong></p>
+      <p>Recall the Gamma MGF: \(\displaystyle M(t)=\left(\frac{\lambda}{\lambda-t}\right)^{\alpha}.\) Match parameters:</p>
+      <p>\(\dfrac{1}{(1-t)^2}=\left(\dfrac{1}{1-t}\right)^2\) so \(\alpha=2,\ \lambda=1\). Thus \(X\sim\mathrm{Gamma}(\alpha=2,\lambda=1)\).</p>
+
+      <p>PDF: \(\displaystyle f(x)=\frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}
+        =\frac{1^2}{\Gamma(2)} x^{1} e^{-x} = x e^{-x},\quad x>0.\)</p>
+    </div>
+  </details>
+
+  <p class="hint"><strong>Hint:</strong> Differentiating the MGF once gives the mean; twice gives \(E[X^2]\). Always check the domain of \(t\) for the MGF (here \(t<1\)).</p>
+  <p class="takeaway">Takeaway: Recognize MGFs by matching their algebraic form to standard distributions (Gamma, Normal, Exponential, etc.).</p>
+</div>
+
+<!-- Question 2 -->
+<div class="question" id="question2">
+  <h2>Question 2</h2>
+  <p><strong>Given:</strong> \(Z_1,\dots,Z_n\stackrel{iid}{\sim}N(0,1)\). Let \(T_n=\sum_{i=1}^n Z_i^2\).</p>
+
+  <details>
+    <summary>Solution sketch</summary>
+    <div class="solution">
+      <p><strong>(a) MGF for \(Z_1^2\).</strong></p>
+      <p>Compute \(M_{Z_1^2}(t)=E[e^{tZ_1^2}]\). Completing the square in the normal integral yields</p>
+      <p>\(M_{Z_1^2}(t)=(1-2t)^{-1/2},\) valid for \(t<\tfrac12\).</p>
+
+      <p><strong>(b) Independence + product of MGFs.</strong></p>
+      <p>For a sum of independent RVs, the MGF multiplies, so</p>
+      <p>\(M_{T_n}(t)=(1-2t)^{-n/2}.\)</p>
+
+      <p><strong>(c) Identify distribution.</strong> Match to Gamma MGF with \(\alpha=n/2\) and \(\lambda=1/2\). So \(T_n\sim\mathrm{Gamma}(\alpha=n/2,\lambda=1/2)\).</p>
+
+      <p>Equivalently, \(T_n\) is \(\chi^2_n\). PDF:</p>
+      <p>\(\displaystyle f_{T_n}(x)=\frac{1}{2^{n/2}\Gamma(n/2)} x^{(n/2)-1} e^{-x/2},\quad x>0.\)</p>
+    </div>
+  </details>
+
+  <p class="hint">Common pitfall: forgetting the domain restriction on \(t\) (the MGF integrals converge only when the quadratic stays negative in the exponent).</p>
+  <p class="takeaway">Takeaway: Chi-squared is a special Gamma — useful when using MGFs or when applying distributional facts to test statistics.</p>
+</div>
+
+<!-- Question 3 -->
+<div class="question" id="question3">
+  <h2>Question 3</h2>
+  <p>Let \(X_i\) i.i.d. with \(f(x)=2x,\ 0\le x\le1\). Let \(S=\sum_{i=1}^{32} X_i\). Compute Chebyshev bound & CLT approximation for \(P(S>24)\).</p>
+
+  <details>
+    <summary>Solution sketch</summary>
+    <div class="solution">
+      <p><strong>Find mean and variance of one \(X\).</strong></p>
+      <p>\(E[X]=\int_0^1 x\cdot 2x\,dx = \int_0^1 2x^2 dx = 2/3.\)</p>
+      <p>\(E[X^2]=\int_0^1 x^2\cdot 2x\,dx=\int_0^1 2x^3 dx = 1/2.\)</p>
+      <p>\(\mathrm{Var}(X)=E[X^2]-[E[X]]^2 = \tfrac12 - (2/3)^2 = \tfrac{1}{18}.\)</p>
+
+      <p><strong>Sum statistics:</strong> \(E[S]=32\cdot\frac23=\frac{64}{3}\approx21.333.\) \(\mathrm{Var}(S)=32\cdot\frac{1}{18}=\frac{16}{9}\approx1.7778.\)</p>
+
+      <hr/>
+
+      <p><strong>(a) Chebyshev bound for \(P(S>24)\).</strong></p>
+      <p>Write \(P(S>24)=P(S-E[S]>24-E[S])\). Compute \(24-E[S]=24-\tfrac{64}{3}=\tfrac{8}{3}.\)</p>
+      <p>By Chebyshev: \(P(|S-E[S]|>8/3)\le \dfrac{\mathrm{Var}(S)}{(8/3)^2}=\dfrac{16/9}{64/9}=\dfrac{1}{4}=0.25.\)</p>
+
+      <hr/>
+
+      <p><strong>(b) CLT approximation.</strong></p>
+      <p>Use normal approximation: \(S\approx N(E[S],\mathrm{Var}(S)).\) Standardize:</p>
+      <p>\(Z=\dfrac{S-E[S]}{\sqrt{16/9}}.\) Then \(P(S>24)\approx P\left(Z>\dfrac{24-E[S]}{\sqrt{16/9}}\right)=P(Z>2)=1-\Phi(2)\approx0.0228.\)</p>
+    </div>
+  </details>
+
+  <p class="hint">Chebyshev gives a very loose bound; CLT gives a much sharper approximation when \(n\) is large and the summands have finite variance.</p>
+  <p class="takeaway">Takeaway: Use Chebyshev for distribution-free (nonparametric) bounds; use CLT for practical approximations when \(n\) is moderate-to-large.</p>
+</div>
+
+<!-- Question 4 -->
+<div class="question" id="question4">
+  <h2>Question 4</h2>
+  <p>Show \(P\!\left(\left|\dfrac{X_\lambda}{\lambda}-1\right|>\varepsilon\right)\to 0\) as \(\lambda\to\infty\), for \(X_\lambda\sim\mathrm{Poisson}(\lambda)\).</p>
+
+  <details>
+    <summary>Solution idea</summary>
+    <div class="solution">
+      <p>Variance of \(\dfrac{X_\lambda}{\lambda}-1\) equals \(\mathrm{Var}(X_\lambda/\lambda)=\dfrac{1}{\lambda^2}\mathrm{Var}(X_\lambda)=\dfrac{1}{\lambda}.\)</p>
+      <p>By Chebyshev:</p>
+      <p>\(\displaystyle P\!\left(\left|\dfrac{X_\lambda}{\lambda}-1\right|>\varepsilon\right)\le \dfrac{1/\lambda}{\varepsilon^2}=\dfrac{1}{\lambda\varepsilon^2}\to0\) as \(\lambda\to\infty.\)</p>
+    </div>
+  </details>
+
+  <p class="takeaway">Takeaway: This is a simple instance of convergence in probability (a Law of Large Numbers effect) for Poisson with growing mean.</p>
+</div>
+</div>
+
+<hr/>
 </body>
 </html>
