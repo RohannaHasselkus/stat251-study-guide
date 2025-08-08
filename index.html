@@ -117,6 +117,84 @@
     </ul>
   </div>
 
+  <!-- ADDITIONAL TOPICS -->
+
+<div class="concept" id="discrete-rv">
+  <h2>Discrete Random Variables</h2>
+  <ul>
+    <li><strong>PMF:</strong> \( p(x) = P(X = x) \), with \( p(x) \geq 0 \) and \( \sum_x p(x) = 1 \).</li>
+    <li><strong>CDF:</strong> \( F(x) = P(X \leq x) = \sum_{t \leq x} p(t) \).</li>
+    <li><strong>Expectation:</strong> \( E[X] = \sum_x x \, p(x) \).</li>
+    <li><strong>Variance:</strong> \( \mathrm{Var}(X) = \sum_x (x - \mu)^2 p(x) \).</li>
+    <li><strong>Examples:</strong>
+      <ul>
+        <li><em>Bernoulli:</em> \( p(x) = p^x (1-p)^{1-x} \), \( \mu = p \), \( \sigma^2 = p(1-p) \).</li>
+        <li><em>Binomial:</em> \( p(x) = \binom{n}{x} p^x (1-p)^{n-x} \).</li>
+        <li><em>Geometric:</em> \( p(x) = (1-p)^{x-1} p \), memoryless property.</li>
+        <li><em>Poisson:</em> \( p(x) = e^{-\lambda} \frac{\lambda^x}{x!} \), \( \mu = \sigma^2 = \lambda \).</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="concept" id="named-cont">
+  <h2>Named Continuous Distributions</h2>
+  <ul>
+    <li><em>Uniform(a,b):</em> \( f(x) = \frac{1}{b-a} \), \( \mu = \frac{a+b}{2} \), \( \sigma^2 = \frac{(b-a)^2}{12} \).</li>
+    <li><em>Exponential(λ):</em> \( f(x) = \lambda e^{-\lambda x} \), \( \mu = 1/\lambda \), memoryless.</li>
+    <li><em>Normal(μ,σ²):</em> \( f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu)^2 / (2\sigma^2)} \).</li>
+    <li><em>Gamma(α,β):</em> \( f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta} \).</li>
+  </ul>
+</div>
+
+<div class="concept" id="bayes">
+  <h2>Conditional Probability & Bayes Theorem</h2>
+  <ul>
+    <li><strong>Conditional Probability:</strong> \( P(A|B) = \frac{P(A \cap B)}{P(B)} \).</li>
+    <li><strong>Bayes' Theorem:</strong> \( P(A|B) = \frac{P(B|A)P(A)}{P(B)} \).</li>
+    <li><strong>Total Probability:</strong> \( P(B) = \sum_i P(B|A_i)P(A_i) \).</li>
+  </ul>
+</div>
+
+<div class="concept" id="sampling">
+  <h2>Sampling Distributions</h2>
+  <ul>
+    <li><strong>Sample Mean:</strong> \( \bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right) \) if \( X_i \) normal.</li>
+    <li><strong>Central Limit Theorem:</strong> For large \( n \), \( \bar{X} \) approx. normal.</li>
+    <li><em>t-distribution:</em> Used when σ unknown and data normal.</li>
+    <li><em>Chi-square:</em> Sum of squares of standard normals.</li>
+    <li><em>F-distribution:</em> Ratio of scaled chi-squares.</li>
+  </ul>
+</div>
+
+<div class="concept" id="estimation">
+  <h2>Point Estimation</h2>
+  <ul>
+    <li><strong>Bias:</strong> \( \mathrm{Bias}(\hat{\theta}) = E[\hat{\theta}] - \theta \).</li>
+    <li><strong>Consistency:</strong> \( \hat{\theta} \to_p \theta \) as \( n \to \infty \).</li>
+    <li><strong>Efficiency:</strong> Lower variance among unbiased estimators is better.</li>
+    <li><strong>MLE:</strong> Maximize \( L(\theta) = \prod f(x_i | \theta) \).</li>
+  </ul>
+</div>
+
+<div class="concept" id="ci">
+  <h2>Confidence Intervals</h2>
+  <ul>
+    <li><em>Mean, σ known:</em> \( \bar{X} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \).</li>
+    <li><em>Mean, σ unknown:</em> \( \bar{X} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}} \).</li>
+    <li><em>Proportion:</em> \( \hat{p} \pm z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \).</li>
+  </ul>
+</div>
+
+<div class="concept" id="hypothesis">
+  <h2>Hypothesis Testing</h2>
+  <ul>
+    <li><strong>Steps:</strong> State \( H_0 \) and \( H_a \), choose α, compute statistic, find p-value, decide.</li>
+    <li><strong>Type I Error:</strong> Rejecting \( H_0 \) when true.</li>
+    <li><strong>Type II Error:</strong> Failing to reject \( H_0 \) when false.</li>
+    <li><st
+
+
   <p><em>"Statistics is the grammar of science." </em></p>
 
   <h2>Interactive PDF and CDF of Normal Distribution</h2>
