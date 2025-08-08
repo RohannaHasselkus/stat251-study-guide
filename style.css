@@ -61,7 +61,7 @@ code {
 em {
   display: block;
   margin-top: 50px;
-  text-align: center;
+  text-align: left;
   color: #555;
   font-style: italic;
 }
