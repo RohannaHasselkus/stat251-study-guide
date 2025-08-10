@@ -62,32 +62,40 @@
 </nav>
 
 <script>
-// Toggle the side menu open/close
-document.getElementById("menu-toggle").addEventListener("click", function () {
-  document.getElementById("side-menu").classList.toggle("open");
+// ===== MENU TOGGLE =====
+document.getElementById('menu-toggle').addEventListener('click', function () {
+  const sideMenu = document.getElementById('side-menu');
+  sideMenu.classList.toggle('open');
+  this.classList.toggle('open'); // shift button when open
 });
 
-// Toggle submenus
-document.querySelectorAll(".submenu-toggle").forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    const submenu = btn.nextElementSibling;
+// ===== SUBMENU TOGGLE =====
+document.querySelectorAll('#side-menu .submenu-toggle').forEach(toggle => {
+  toggle.addEventListener('click', function () {
+    const submenu = this.nextElementSibling;
+    submenu.classList.toggle('open');
 
-    // Toggle submenu visibility
-    submenu.classList.toggle("open");
-
-    // Update arrow direction
-    if (submenu.classList.contains("open")) {
-      btn.textContent = "▼ " + btn.textContent.replace(/^▶\s*/, "");
-    } else {
-      btn.textContent = "▶ " + btn.textContent.replace(/^▼\s*/, "");
-    }
-
-    // Scroll to make the submenu visible if it's opening
-    if (submenu.classList.contains("open")) {
-      submenu.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    // Change arrow direction
+    if (this.textContent.trim().startsWith('▶')) {
+      this.textContent = this.textContent.replace('▶', '▼');
+    } else if (this.textContent.trim().startsWith('▼')) {
+      this.textContent = this.textContent.replace('▼', '▶');
     }
   });
 });
+
+// ===== CLOSE MENU ON LINK CLICK (optional) =====
+document.querySelectorAll('#side-menu a').forEach(link => {
+  link.addEventListener('click', function () {
+    const sideMenu = document.getElementById('side-menu');
+    const menuToggle = document.getElementById('menu-toggle');
+    if (sideMenu.classList.contains('open')) {
+      sideMenu.classList.remove('open');
+      menuToggle.classList.remove('open');
+    }
+  });
+});
+
 
 </script>
 

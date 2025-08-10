@@ -117,7 +117,9 @@ div.title{
   margin-top: 0.3em;
 }
 
-/* Hamburger toggle button */
+/* ===========================
+   HAMBURGER BUTTON
+   =========================== */
 #menu-toggle {
   font-size: 24px;
   padding: 10px 14px;
@@ -127,16 +129,22 @@ div.title{
   position: fixed;
   top: 15px;
   left: 15px;
-  z-index: 1001;
+  z-index: 1100; /* stays above page, below menu text when open */
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, left 0.3s ease;
 }
 #menu-toggle:hover {
   background-color: #0055aa;
 }
+/* When menu is open, shift button out of the way */
+#menu-toggle.open {
+  left: 275px; /* menu width (260px) + padding */
+}
 
-/* Side menu container - scrollable */
+/* ===========================
+   SIDE MENU CONTAINER
+   =========================== */
 #side-menu {
   width: 260px;
   background-color: #003366;
@@ -147,15 +155,13 @@ div.title{
   transition: left 0.3s ease;
   z-index: 1000;
   box-shadow: 2px 0 8px rgba(0,0,0,0.15);
-
-  /* Full scroll capability */
-  overflow-y: auto;
+  overflow-y: auto; /* enables scrolling for long menus */
 }
 #side-menu.open {
   left: 0;
 }
 
-/* Push page content when menu opens */
+/* Push page content aside when menu opens */
 #page-wrapper {
   transition: margin-left 0.3s ease;
   margin-left: 0;
@@ -164,7 +170,9 @@ div.title{
   margin-left: 260px;
 }
 
-/* Menu list styles */
+/* ===========================
+   MENU ITEM STYLES
+   =========================== */
 #side-menu ul {
   list-style: none;
   padding: 0;
@@ -191,7 +199,9 @@ div.title{
   background-color: #0055aa;
 }
 
-/* Submenus */
+/* ===========================
+   SUBMENU STYLES
+   =========================== */
 .submenu {
   display: none;
   list-style: circle;
@@ -202,7 +212,21 @@ div.title{
   font-size: 0.9rem;
 }
 .submenu.open {
-  display: block; /* Expands inside scroll area */
+  display: block;
+}
+
+/* ===========================
+   SCROLLBAR STYLING (optional)
+   =========================== */
+#side-menu::-webkit-scrollbar {
+  width: 8px;
+}
+#side-menu::-webkit-scrollbar-track {
+  background: #002244;
+}
+#side-menu::-webkit-scrollbar-thumb {
+  background-color: #0055aa;
+  border-radius: 4px;
 }
 
 
