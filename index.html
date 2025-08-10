@@ -12,9 +12,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>STAT 25100 Final Exam Study Guide </h1>
 
-  <nav class="navbar">
+<!-- Toggle button -->
+  <button id="menu-toggle">☰</button>
+
+<!-- Side menu -->
+<nav id="side-menu">
   <ul>
     <li><a href="#l10-11">PDF & CDF</a></li>
     <li><a href="#l12">Expected Value</a></li>
@@ -32,11 +35,11 @@
     <li><a href="#distributions">Common Distributions</a></li>
     <li><a href="#ci">Confidence Intervals</a></li>
     <li><a href="#hypothesis">Hypothesis Testing</a></li>
+
+    <!-- Interactive Visualizations submenu -->
     <li>
-      <button id="interactive-toggle" style="background: none; border: none; padding: 0; font-size: 1em; cursor: pointer; color: #fff;">
-        ▶ Interactive Visualizations
-      </button>
-      <ul id="interactive-list" style="margin-left: 15px; list-style: circle; display: none;">
+      <button class="submenu-toggle">▶ Interactive Visualizations</button>
+      <ul class="submenu">
         <li><a href="#pdf-cdf">PDF & CDF of Normal Distribution</a></li>
         <li><a href="#dice-bar">PMF of a Fair Die</a></li>
         <li><a href="#clt">Central Limit Theorem Simulation</a></li>
@@ -45,19 +48,52 @@
       </ul>
     </li>
 
+    <!-- Example PSET submenu -->
     <li>
-      <button id="pset-toggle" style="background: none; border: none; padding: 0; font-size: 1em; cursor: pointer; color: #fff;">
-        ▶ Example PSET
-      </button>
-      <ul id="examplepset" style="margin-left: 15px; list-style: circle; display: none;">
+      <button class="submenu-toggle">▶ Example PSET</button>
+      <ul class="submenu">
         <li><a href="#question1">Question 1</a></li>
-        <li><a href="#question2">Question 2 </a></li>
+        <li><a href="#question2">Question 2</a></li>
         <li><a href="#question3">Question 3</a></li>
         <li><a href="#question4">Question 4</a></li>
       </ul>
     </li>
   </ul>
 </nav>
+
+<script>
+// Toggle the side menu open/close
+document.getElementById("menu-toggle").addEventListener("click", function () {
+  document.getElementById("side-menu").classList.toggle("open");
+});
+
+// Toggle submenus
+document.querySelectorAll(".submenu-toggle").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    const submenu = btn.nextElementSibling;
+
+    // Toggle submenu visibility
+    submenu.classList.toggle("open");
+
+    // Update arrow direction
+    if (submenu.classList.contains("open")) {
+      btn.textContent = "▼ " + btn.textContent.replace(/^▶\s*/, "");
+    } else {
+      btn.textContent = "▶ " + btn.textContent.replace(/^▼\s*/, "");
+    }
+
+    // Scroll to make the submenu visible if it's opening
+    if (submenu.classList.contains("open")) {
+      submenu.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  });
+});
+
+</script>
+
+<div id="page-wrapper">
+
+  <h1>STAT 25100 Final Exam Study Guide </h1>
 
   <!-- All concepts and equations are already combined into this single version -->
 
@@ -1648,5 +1684,6 @@
 </div>
 
 <hr/>
+</div>
 </body>
 </html>
